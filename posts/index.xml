@@ -58,7 +58,7 @@
 這時我就靈光一閃，耶，既然可以用HackMD push筆記到GitHub上面，那我是不是就可以用HackMD來編輯我之前用GitHub Pages內建的Jekyll架的部落格了呢!
 原先的部落格有幾個讓我不滿意的地方:
  只能用git push的方式更新文章，所以有很多限制  一定要在電腦上操作，手機無法 沒有安裝git的電腦無法 就算裝了git的電腦還是要經過一番設定才能正常更新文章   嘗試了幾個本機端的MarkDown編輯器，都沒有比較滿意的  如果能用HackMD來編輯文章的話，可以解決很多的問題:
- HackMD是web端的應用程式，完全可以跨平台操作 做為一個MarkDown編輯器，它堪稱完美，而且開發團隊活躍，常常推出令人耳目一新的功能 原本在HackMD上面就打了很多筆記，如果可以與部落格同步就可以無痛轉移這些文章到部落格上  但是，事與願違，經過一番嘗試後發現有個問題。雖然文章可以正常使用HackMD push到GitHub上面，但是因為用GitHub APP進行push的緣故，所以無法觸發GitHub Pages內建的Jekyll Build功能，如果要觸發build的話，需要有verified email的使用者才行(參考官方文件)。
+ HackMD是web端的應用程式，完全可以跨平台操作 做為一個MarkDown編輯器，它堪稱完美，而且開發團隊活躍，常常推出令人耳目一新的功能 原本在HackMD上面就打了很多筆記，如果可以與部落格同步就可以無痛轉移這些文章到部落格上  但是，事與願違，經過一番嘗試後發現有個問題。雖然文章可以正常使用HackMD push到GitHub上面，但是因為用GitHub APP進行push的緣故，所以無法觸發GitHub Pages內建的Jekyll Build功能，如果要觸發build的話，需要有verified email的使用者才行(參考官方文件 )。
 我想的到的解法是用一隻爬蟲(或api，如果github有提供的話)一直監控這個repository，一旦發現有人push東西上去，就重複push一個空白的commit來觸發build。理論上可行，但是感覺很麻煩。
 於是乎我到HackMD的粉專發問，小編給我的回應是只能用CI/CD工具進行build，當下看了真是一頭霧水，以前有聽過CI/CD的工具，但一直搞不懂那是做啥用的。
 經過一番折騰才讓我研究出來，其實小編的意思是讓我用CI/CD工具對GitHub進行監控，如果有人push東西上去，CI/CD就會把東西clone下來，做好local build之後，再把東西deploy到GitHub上面。這就不是使用GitHub Pages自帶的Jekyll build功能了，而是全部自己來。
@@ -101,8 +101,7 @@
       <pubDate>Sun, 11 Nov 2018 10:30:00 +0800</pubDate>
       
       <guid>http://netjagaimo.github.io/blog_life/2018-11-10-king_gnu_its_a_small_world/</guid>
-      <description>前言 歌曲網址: https://www.youtube.com/watch?v=JBmzU_qn_G8
-既然今天是1111光棍節，就來講一下這首描寫兩人世界的可愛歌曲好了，哈哈。
+      <description>前言 歌曲網址: https://www.youtube.com/watch?v=JBmzU_qn_G8 既然今天是1111光棍節，就來講一下這首描寫兩人世界的可愛歌曲好了，哈哈。
 It&amp;rsquo;s a small world這首歌，是King gnu最近出的歌曲，詞曲皆出自團員之一的常田大希。
 會認識King gnu是因為一部動漫「banana fish」的片尾曲，那首歌也是king gnu唱的，叫做prayer X，也是十分好聽。
 It&amp;rsquo;s a small world是一首很可愛的歌，MV也十分的精緻與可愛。歌曲內容大致上在描寫一個想要走進另一個人世界的心情，即便現實世界與他脫節，只要能走進另一個人的世界，他在所不辭。
@@ -112,8 +111,7 @@ MV的內容則是呼應歌曲，展現出兩個醜陋怪異的人互相被對方
 MV的部分，以皮膚發白長相怪異的兩人為主角，透過怪異的舞蹈漸漸的熟識起來，就很像終於遇到了懂你，並且願意與你一起搞怪的人一般，雖然最後男方急於確認這段關係，導致女方狠狠的甩了他，但我覺得女方的行為比較像是傲嬌(一種明明自己很喜歡，但卻裝作不喜歡的感覺)，也可能是我想多了，哈哈。
 總之這首歌，不管是歌曲還是MV，都描寫出了一種，人生在世，希望能有一個懂自己的人，並希望與這個人共度的青澀且可愛的感覺。我覺得是個十分優秀的作品。
 歌詞 附上網路上找的日、英歌詞，給各位看看。
-以下歌詞轉載自: https://lyricstranslate.com/en/its-small-world-its-small-world.html
-日文 ダンスなんて上手く踊れないけれど
+以下歌詞轉載自: https://lyricstranslate.com/en/its-small-world-its-small-world.html 日文 ダンスなんて上手く踊れないけれど
 今だけは踊りたい気分
 イケてるステップなんて刻めないけれど
 誰も見ちゃいないし気にしないで
@@ -383,8 +381,7 @@ https://www.youtube.com/watch?v=QLDktqMxgmYhttps://www.youtube.com/watch?v=I0y2L
 2.把左上角的全選打勾
 3.跳出選取與這筆搜尋相符的所有會話群組的訊息，給他按下去，這樣就把未讀郵件全部選起來了
 4.標示為已讀，Done
- 參考: Gmail邮箱里面有成千上百封未读邮件，如何快速的标记为已读？，知乎。2014/03
- </description>
+ 參考: Gmail邮箱里面有成千上百封未读邮件，如何快速的标记为已读？，知乎。2014/03  </description>
     </item>
     
     <item>

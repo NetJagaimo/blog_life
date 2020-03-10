@@ -1,7 +1,7 @@
 {
 	"version": 3,
 	"file": "style.min.css",
-	"sourceRoot": "C:/Users/Sam/Desktop/blog_life",
+	"sourceRoot": "/home/travis/gopath/src/github.com/NetJagaimo/blog_life",
 	"sources": [
 		"themes/LoveIt/assets/css/style.template.scss",
 		"themes/LoveIt/assets/css/_variables.scss",
