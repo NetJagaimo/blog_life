@@ -1,7 +1,7 @@
 {{- $scratch := .Scratch.Get "scratch" -}}
 
 <div class="home-profile">
-    {{- $avatar := print .Site.BaseURL .Site.Params.home.profile.avatarURL -}}
+    {{- $avatar := print "/blog_life/" .Site.Params.home.profile.avatarURL -}}
     {{- with .Site.Params.home.profile.gravatarEmail -}}
         {{- $avatar = md5 . | printf "https://www.gravatar.com/avatar/%s?s=240&d=mp" -}}
     {{- end -}}
