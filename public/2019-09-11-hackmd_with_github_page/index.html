@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>利用HakcMD編輯GitHub Pages部落格 | 土豆のLife</title>
+        <meta name="Description" content="About LoveIt Theme"><meta property="og:title" content="利用HakcMD編輯GitHub Pages部落格" />
+<meta property="og:description" content="利用HakcMD編輯GitHub Pages部落格 前言  前言部分僅為個人廢話，完全可以跳過沒關係喔~
+ 最近發現，HackMD出了一個功能，可以讓HackMD裡面的檔案與GitHub進行連結，亦即，可以用HackMD這個方便的md文件編輯器，來編輯GitHub上的文件。
+這時我就靈光一閃，耶，既然可以用HackMD push筆記到GitHub上面，那我是不是就可以用HackMD來編輯我之前用GitHub Pages內建的Jekyll架的部落格了呢!
+原先的部落格有幾個讓我不滿意的地方:
+ 只能用git push的方式更新文章，所以有很多限制  一定要在電腦上操作，手機無法 沒有安裝git的電腦無法 就算裝了git的電腦還是要經過一番設定才能正常更新文章   嘗試了幾個本機端的MarkDown編輯器，都沒有比較滿意的  如果能用HackMD來編輯文章的話，可以解決很多的問題:
+ HackMD是web端的應用程式，完全可以跨平台操作 做為一個MarkDown編輯器，它堪稱完美，而且開發團隊活躍，常常推出令人耳目一新的功能 原本在HackMD上面就打了很多筆記，如果可以與部落格同步就可以無痛轉移這些文章到部落格上  但是，事與願違，經過一番嘗試後發現有個問題。雖然文章可以正常使用HackMD push到GitHub上面，但是因為用GitHub APP進行push的緣故，所以無法觸發GitHub Pages內建的Jekyll Build功能，如果要觸發build的話，需要有verified email的使用者才行(參考官方文件 )。
+我想的到的解法是用一隻爬蟲(或api，如果github有提供的話)一直監控這個repository，一旦發現有人push東西上去，就重複push一個空白的commit來觸發build。理論上可行，但是感覺很麻煩。
+於是乎我到HackMD的粉專發問，小編給我的回應是只能用CI/CD工具進行build，當下看了真是一頭霧水，以前有聽過CI/CD的工具，但一直搞不懂那是做啥用的。
+經過一番折騰才讓我研究出來，其實小編的意思是讓我用CI/CD工具對GitHub進行監控，如果有人push東西上去，CI/CD就會把東西clone下來，做好local build之後，再把東西deploy到GitHub上面。這就不是使用GitHub Pages自帶的Jekyll build功能了，而是全部自己來。
+總之，搞了一整天總算是成功弄出來了，以下是教學，正文開始~
+ 待更新&hellip;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://netjagaimo.github.io/blog_life/2019-09-11-hackmd_with_github_page/" />
+<meta property="article:published_time" content="2019-09-11T23:50:00+08:00" />
+<meta property="article:modified_time" content="2019-09-11T23:50:00+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="利用HakcMD編輯GitHub Pages部落格"/>
+<meta name="twitter:description" content="利用HakcMD編輯GitHub Pages部落格 前言  前言部分僅為個人廢話，完全可以跳過沒關係喔~
+ 最近發現，HackMD出了一個功能，可以讓HackMD裡面的檔案與GitHub進行連結，亦即，可以用HackMD這個方便的md文件編輯器，來編輯GitHub上的文件。
+這時我就靈光一閃，耶，既然可以用HackMD push筆記到GitHub上面，那我是不是就可以用HackMD來編輯我之前用GitHub Pages內建的Jekyll架的部落格了呢!
+原先的部落格有幾個讓我不滿意的地方:
+ 只能用git push的方式更新文章，所以有很多限制  一定要在電腦上操作，手機無法 沒有安裝git的電腦無法 就算裝了git的電腦還是要經過一番設定才能正常更新文章   嘗試了幾個本機端的MarkDown編輯器，都沒有比較滿意的  如果能用HackMD來編輯文章的話，可以解決很多的問題:
+ HackMD是web端的應用程式，完全可以跨平台操作 做為一個MarkDown編輯器，它堪稱完美，而且開發團隊活躍，常常推出令人耳目一新的功能 原本在HackMD上面就打了很多筆記，如果可以與部落格同步就可以無痛轉移這些文章到部落格上  但是，事與願違，經過一番嘗試後發現有個問題。雖然文章可以正常使用HackMD push到GitHub上面，但是因為用GitHub APP進行push的緣故，所以無法觸發GitHub Pages內建的Jekyll Build功能，如果要觸發build的話，需要有verified email的使用者才行(參考官方文件 )。
+我想的到的解法是用一隻爬蟲(或api，如果github有提供的話)一直監控這個repository，一旦發現有人push東西上去，就重複push一個空白的commit來觸發build。理論上可行，但是感覺很麻煩。
+於是乎我到HackMD的粉專發問，小編給我的回應是只能用CI/CD工具進行build，當下看了真是一頭霧水，以前有聽過CI/CD的工具，但一直搞不懂那是做啥用的。
+經過一番折騰才讓我研究出來，其實小編的意思是讓我用CI/CD工具對GitHub進行監控，如果有人push東西上去，CI/CD就會把東西clone下來，做好local build之後，再把東西deploy到GitHub上面。這就不是使用GitHub Pages自帶的Jekyll build功能了，而是全部自己來。
+總之，搞了一整天總算是成功弄出來了，以下是教學，正文開始~
+ 待更新&hellip;"/>
+<meta name="theme-color" content="#ffffff">
+<meta name="msapplication-TileColor" content="#da532c">
+<link rel="canonical" href="http://netjagaimo.github.io/blog_life/2019-09-11-hackmd_with_github_page/" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="prev" href="http://netjagaimo.github.io/blog_life/2019-01-28-wake_up_warm_up_festival/" /><link rel="next" href="http://netjagaimo.github.io/blog_life/2019-11-04-potato-quote/" /><link rel="stylesheet" href="/blog_life/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/blog_life/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/blog_life/css/style.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "利用HakcMD編輯GitHub Pages部落格",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/netjagaimo.github.io\/blog_life\/2019-09-11-hackmd_with_github_page\/"
+        },"image": {
+                "@type": "ImageObject",
+                "url": "http:\/\/netjagaimo.github.io\/blog_life\/cover.png",
+                "width":  800 ,
+                "height":  600 
+            },"genre": "posts","keywords": "blog","wordcount":  34 ,
+        "url": "http:\/\/netjagaimo.github.io\/blog_life\/2019-09-11-hackmd_with_github_page\/","datePublished": "2019-09-11T23:50:00\x2b08:00","dateModified": "2019-09-11T23:50:00\x2b08:00","publisher": {
+                "@type": "Organization",
+                "name": "xxxx",
+                "logo": {
+                "@type": "ImageObject",
+                "url": "http:\/\/netjagaimo.github.io\/blog_life\/logo.png",
+                "width":  127 ,
+                "height":  40 
+                }
+            },"description": ""
+    }
+    </script></head>
+    <body><script>
+            if (!window.localStorage || !window.localStorage.getItem('theme')) {window.isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;} else {
+                window.isDark = (window.localStorage && window.localStorage.getItem('theme')) === 'dark';
+            }
+            window.isDark && document.body.classList.add('dark-theme');
+        </script><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title animated bounceIn">
+            <a href="/blog_life/">土豆のLife</a>
+        </div>
+        <div class="menu"><a class="menu-item" href="/blog_life/blog_life/posts/">Posts</a><a class="menu-item" href="/blog_life/blog_life/tags/">Tags</a><a class="menu-item" href="/blog_life/blog_life/categories/">Categories</a><a class="menu-item" href="/blog_life/blog_life/about/">About</a><a href="javascript:void(0);" class="theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw "></i>
+            </a>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-wrapper">
+        <div class="header-container">
+            <div class="header-title animated bounceIn">
+                <a href="/blog_life/">土豆のLife</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/blog_life/blog_life/posts/" title="">Posts</a><a class="menu-item" href="/blog_life/blog_life/tags/" title="">Tags</a><a class="menu-item" href="/blog_life/blog_life/categories/" title="">Categories</a><a class="menu-item" href="/blog_life/blog_life/about/" title="">About</a><a href="javascript:void(0);" class="theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</header>
+
+<script>
+    window.desktopHeaderMode = "fixed";
+    window.mobileHeaderMode = "auto";
+</script>
+<main class="main">
+                <div class="container"><article class="page single"><h1 class="single-title animated flipInX">利用HakcMD編輯GitHub Pages部落格</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/blog_life/" title="Author" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>土豆</a>
+</span>&nbsp;<span class="post-category">included in&nbsp;
+                            <span>
+                                <a href="/blog_life/categories/%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88">
+                                    <i class="far fa-folder fa-fw"></i>程式設計
+                                </a>
+                            </span>&nbsp;
+                            <span>
+                                <a href="/blog_life/categories/%E9%83%A8%E8%90%BD%E6%A0%BC%E6%9E%B6%E8%A8%AD">
+                                    <i class="far fa-folder fa-fw"></i>部落格架設
+                                </a>
+                            </span></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i><time datetime=2019-09-11>2019-09-11</time>&nbsp;
+                <i class="fas fa-pencil-alt fa-fw"></i>about 34 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>1 min&nbsp;</div>
+        </div><div class="content" id="content"><h1 id="利用hakcmd編輯github-pages部落格">利用HakcMD編輯GitHub Pages部落格</h1>
+<h2 id="前言">前言</h2>
+<blockquote>
+<p>前言部分僅為個人廢話，完全可以跳過沒關係喔~</p>
+</blockquote>
+<p>最近發現，HackMD出了一個功能，可以讓HackMD裡面的檔案與GitHub進行連結，亦即，可以用HackMD這個方便的md文件編輯器，來編輯GitHub上的文件。</p>
+<p>這時我就靈光一閃，耶，既然可以用HackMD push筆記到GitHub上面，那我是不是就可以用HackMD來編輯我之前用GitHub Pages內建的Jekyll架的部落格了呢!</p>
+<p>原先的部落格有幾個讓我不滿意的地方:</p>
+<ol>
+<li>只能用git push的方式更新文章，所以有很多限制
+<ul>
+<li>一定要在電腦上操作，手機無法</li>
+<li>沒有安裝git的電腦無法</li>
+<li>就算裝了git的電腦還是要經過一番設定才能正常更新文章</li>
+</ul>
+</li>
+<li>嘗試了幾個本機端的MarkDown編輯器，都沒有比較滿意的</li>
+</ol>
+<p>如果能用HackMD來編輯文章的話，可以解決很多的問題:</p>
+<ol>
+<li>HackMD是web端的應用程式，完全可以跨平台操作</li>
+<li>做為一個MarkDown編輯器，它堪稱完美，而且開發團隊活躍，常常推出令人耳目一新的功能</li>
+<li>原本在HackMD上面就打了很多筆記，如果可以與部落格同步就可以無痛轉移這些文章到部落格上</li>
+</ol>
+<p>但是，事與願違，經過一番嘗試後發現有個問題。雖然文章可以正常使用HackMD push到GitHub上面，但是因為用GitHub APP進行push的緣故，所以無法觸發GitHub Pages內建的Jekyll Build功能，如果要觸發build的話，需要有verified email的使用者才行(參考<a href="https://help.github.com/en/articles/generic-jekyll-build-failures" target="_blank" rel="noopener noreffer">官方文件</a>
+)。</p>
+<p>我想的到的解法是用一隻爬蟲(或api，如果github有提供的話)一直監控這個repository，一旦發現有人push東西上去，就重複push一個空白的commit來觸發build。理論上可行，但是感覺很麻煩。</p>
+<p>於是乎我到HackMD的粉專發問，小編給我的回應是只能用CI/CD工具進行build，當下看了真是一頭霧水，以前有聽過CI/CD的工具，但一直搞不懂那是做啥用的。</p>
+<p>經過一番折騰才讓我研究出來，其實小編的意思是讓我用CI/CD工具對GitHub進行監控，如果有人push東西上去，CI/CD就會把東西clone下來，做好local build之後，再把東西deploy到GitHub上面。這就不是使用GitHub Pages自帶的Jekyll build功能了，而是全部自己來。</p>
+<p>總之，搞了一整天總算是成功弄出來了，以下是教學，正文開始~</p>
+<hr>
+<p>待更新&hellip;</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>The article was updated on 2019-09-11</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section><span>
+                        <a href="/blog_life/tags/blog">
+                            <i class="fas fa-tag fa-fw"></i>blog
+                        </a>
+                    </span>&nbsp;</section>
+        <section>
+            <span><a href="javascript:window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/blog_life/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/blog_life/2019-01-28-wake_up_warm_up_festival/" class="prev" rel="prev" title="2019覺醒大暖季記"><i class="fas fa-angle-left fa-fw"></i>2019覺醒大暖季記</a>
+            <a href="/blog_life/2019-11-04-potato-quote/" class="next" rel="next" title="豆語錄">豆語錄<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div class="comment"></div>
+    </article></div>
+            </main><footer class="footer">
+    <div class="copyright"><div class="copyright-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreffer">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="external nofollow noopener noreffer">LoveIt<i class="far fa-heart fa-fw"></i></a>
+        </div>
+
+        <div class="copyright-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/blog_life/" target="_blank">土豆</a></span></div>
+    </div>
+</footer>
+</div><a href="#" class="dynamic-to-top animated faster" id="dynamic-to-top">
+            <span>&nbsp;</span>
+        </a><script>
+        document.addEventListener('DOMContentLoaded', function () {
+            lightGallery(document.getElementById('content'), {
+                selector: '.lightgallery',
+                speed: 400,
+                hideBarsDelay: 2000,
+                thumbnail: true,
+                exThumbImage: 'data-thumbnail',
+                thumbWidth: 80,
+                thumbContHeight: 80,
+            });
+        });
+    </script><link rel="stylesheet" href="/blog_life/lib/lightgallery/lightgallery.min.css"><script src="/blog_life/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script><script src="/blog_life/lib/lazysizes/lazysizes.min.js"></script><script src="/blog_life/lib/lightgallery/lightgallery.min.js"></script><script src="/blog_life/lib/lightgallery/lg-thumbnail.min.js"></script><script src="/blog_life/lib/lightgallery/lg-zoom.min.js"></script><script src="/blog_life/js/theme.min.js"></script></body>
+</html>
