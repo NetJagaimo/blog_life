@@ -3,10 +3,16 @@
         <title>土豆のLife | 土豆のLife</title>
         <link>http://netjagaimo.github.io/blog_life/</link>
         <description>土豆のLife | 土豆のLife</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-TW</language><lastBuildDate>Tue, 10 Mar 2020 06:03:00 &#43;0800</lastBuildDate><atom:link href="http://netjagaimo.github.io/blog_life/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-TW</language><lastBuildDate>Tue, 10 Mar 2020 00:09:09 &#43;0800</lastBuildDate><atom:link href="http://netjagaimo.github.io/blog_life/" rel="self" type="application/rss+xml" /><item>
                 <title>Posts</title>
                 <link>http://netjagaimo.github.io/blog_life/posts/</link>
                 <pubDate>Tue, 10 Mar 2020 06:03:00 &#43;0800</pubDate><guid>http://netjagaimo.github.io/blog_life/posts/</guid>
                 <description></description>
+            </item><item>
+                <title>關於我</title>
+                <link>http://netjagaimo.github.io/blog_life/about/</link>
+                <pubDate>Tue, 10 Mar 2020 00:09:09 &#43;0800</pubDate><guid>http://netjagaimo.github.io/blog_life/about/</guid>
+                <description>&lt;p&gt;記錄我生活以及那些想說又不想直接說的事情的部落格&lt;/p&gt;
+</description>
             </item></channel>
 </rss>
