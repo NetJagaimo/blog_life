@@ -36,7 +36,7 @@ theme = "LoveIt"
       # 主页显示头像的 URL
       avatarURL = "/logo.png"
       # 主页显示的网站副标题
-      subtitle = "豆哥の生活紀錄，紀載著那些你可能已經知道或是不知道的我。"
+      subtitle = "豆哥の生活紀錄，記載著那些你可能已經知道或是不知道的我。"
       # 是否为副标题显示打字机动画
       typeit = true
       # 是否显示社交账号
